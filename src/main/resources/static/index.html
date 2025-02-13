@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form id="employForm">
+ <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required><br><br>
+
+        <button type="submit">Submit</button>
+</form>
+
+<script >
+     document.getElementById("employform").addEventListener("submit",function(event){
+    	 event.preventDefault();
+    	 
+    	 const employData= {
+    			 employeeName : document.getElementById("name").value,
+    			 employeePhone: document.getElementById("phone").value,
+    			 employeeEmail: document.getElementById("email").value
+    	 }
+    	 
+    	 
+    	 fetch("http://localhost:8080/employee", { // Update this URL if needed
+             method: "POST",
+             headers: {
+                 "Content-Type": "application/json"
+             },
+             body: JSON.stringify(employData)
+         })
+         .then(response => response.json())
+         .then(data => {
+             alert("Employee added successfully!");
+             document.getElementById("employeForm").reset();
+         })
+        
+         .catch(error => console.error("Error:", error));     });
+</script>
+</body>
+</html>
